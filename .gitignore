@@ -1,0 +1,10 @@
+# Jangan unggah file environment (karena berisi password DB)
+.env
+
+# Jangan unggah folder vendor atau modul besar
+vendor/
+node_modules/
+
+# Jangan unggah file binary hasil kompilasi
+*.exe
+*.out
