@@ -1,0 +1,54 @@
+# ====================================================================
+# 1. SECURITY & SENSITIVE DATA (Sangat Rahasia)
+# ====================================================================
+# Melarang keras semua file konfigurasi yang berisi password DB dan API Key
+.env
+.env.local
+.env.production
+.env.development
+*.pem
+*.key
+*.secret
+
+# ====================================================================
+# 2. DEPENDENCIES & PACKAGES (Folder Berat)
+# ====================================================================
+# Mengabaikan semua library Frontend yang diunduh via npm install
+node_modules/
+/out/
+/dist/
+
+# Mengabaikan folder vendor milik Go Backend (jika ada)
+vendor/
+
+# ====================================================================
+# 3. BUILD OUTPUTS & CACHES (File Sampah Kompilasi)
+# ====================================================================
+# Mengabaikan folder cache otomatis hasil running Next.js dev
+.next/
+
+# Mengabaikan file binary hasil compile aplikasi Go Backend
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+main
+
+# ====================================================================
+# 4. DATABASE & DOCKER STORAGE (Data Volume Docker)
+# ====================================================================
+# Mengabaikan folder penyimpanan data otomatis milik database di Docker
+pgdata/
+data_db/
+.docker/
+
+# ====================================================================
+# 5. OS & IDE TRASH (File Sampah Sistem & VS Code)
+# ====================================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
