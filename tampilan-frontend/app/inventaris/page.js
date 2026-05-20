@@ -8,6 +8,7 @@ export default function GudangPage() {
   const [loading, setLoading] = useState(true);
   const [activeMenu, setActiveMenu] = useState("overview");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notification, setNotification] = useState("");
   
   // State untuk form input barang baru
   const [formData, setFormData] = useState({
@@ -23,11 +24,11 @@ export default function GudangPage() {
       setLoading(true);
       // Ganti IP jika kamu menjalankan backend di komputer yang berbeda, 
       // atau gunakan localhost:8080 jika di satu komputer yang sama.
-      const resItems = await fetch("http://10.11.5.12:8080/inventaris");
+      const resItems = await fetch("http://localhost:8080/inventaris");
       const dataItems = await resItems.json();
       setItems(dataItems || []);
 
-      const resTrans = await fetch("http://10.11.5.12:8080/transaksi");
+      const resTrans = await fetch("http://localhost:8080/transaksi");
       const dataTrans = await resTrans.json();
       setTransactions(dataTrans || []);
     } catch (err) {
@@ -37,6 +38,13 @@ export default function GudangPage() {
     }
   };
 
+  const showToast = (message) => {
+  setNotification(message);
+  setTimeout(() => {
+    setNotification("");
+  }, 3000); // Pesan hilang otomatis dalam 3 detik
+};
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -45,7 +53,7 @@ export default function GudangPage() {
   
   const handleSave = async () => {
     try {
-      const res = await fetch("http://10.11.5.12:8080/inventaris", {
+      const res = await fetch("http://localhost:8080/inventaris", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -53,6 +61,7 @@ export default function GudangPage() {
       if (res.ok) {
         setIsModalOpen(false);
         setFormData({ nama_barang: "", stok: 0, harga: 0, kategori: "General" });
+        showToast("Barang berhasil disimpan!");
         fetchData(); // Refresh data
       }
     } catch (err) {
@@ -63,10 +72,12 @@ export default function GudangPage() {
   const handleDelete = async (id) => {
     if (confirm("Apakah anda yakin ingin menghapus barang ini?")) {
       try {
-        const res = await fetch(`http://10.11.5.12:8080/inventaris/${id}`, {
+        const res = await fetch(`http://localhost:8080/inventaris/${id}`, {
           method: "DELETE",
         });
-        if (res.ok) fetchData(); 
+        if (res.ok)
+          showToast("Barang berhasil dihapus!");
+          fetchData(); 
       } catch (err) {
         alert("Gagal menghapus barang!");
       }
@@ -227,7 +238,25 @@ export default function GudangPage() {
           </div>
         </div>
       )}
-    </div>
+            {/* --- NOTIFIKASI MELAYANG (TOAST) --- */}
+      {notification && (
+        <div style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "30px",
+          backgroundColor: "#1e293b",
+          color: "white",
+          padding: "16px 24px",
+          borderRadius: "12px",
+          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.3)",
+          zIndex: 9999,
+          fontWeight: "bold",
+          borderLeft: "6px solid #4f46e5",
+        }}>
+          {notification}
+        </div>
+      )}
+    </div> // Ini penutup dashboardLayout
   );
 }
 
