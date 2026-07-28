@@ -2,10 +2,11 @@
 -- PostgreSQL database dump
 --
 
+
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
 
--- Started on 2026-07-21 09:02:05
+-- Started on 2026-07-28 08:57:53
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -94,7 +95,8 @@ CREATE TABLE public.inventaris (
     nama_barang character varying(100) NOT NULL,
     stok integer DEFAULT 0,
     harga numeric(10,2),
-    kategori character varying(50)
+    kategori character varying(50),
+    CONSTRAINT chk_stok_tidak_minus CHECK ((stok >= 0))
 );
 
 
@@ -117,7 +119,7 @@ CREATE SEQUENCE public.inventaris_id_seq
 ALTER SEQUENCE public.inventaris_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5032 (class 0 OID 0)
+-- TOC entry 5034 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: inventaris_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -159,7 +161,7 @@ CREATE SEQUENCE public.transaksi_id_seq
 ALTER SEQUENCE public.transaksi_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5033 (class 0 OID 0)
+-- TOC entry 5035 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: transaksi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -184,7 +186,7 @@ ALTER TABLE ONLY public.transaksi ALTER COLUMN id SET DEFAULT nextval('public.tr
 
 
 --
--- TOC entry 5024 (class 0 OID 16846)
+-- TOC entry 5026 (class 0 OID 16846)
 -- Dependencies: 220
 -- Data for Name: inventaris; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -194,7 +196,7 @@ COPY public.inventaris (id, nama_barang, stok, harga, kategori) FROM stdin;
 
 
 --
--- TOC entry 5026 (class 0 OID 16860)
+-- TOC entry 5028 (class 0 OID 16860)
 -- Dependencies: 222
 -- Data for Name: transaksi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -204,7 +206,7 @@ COPY public.transaksi (id, barang_id, tipe_transaksi, jumlah, tanggal) FROM stdi
 
 
 --
--- TOC entry 5034 (class 0 OID 0)
+-- TOC entry 5036 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: inventaris_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -213,7 +215,7 @@ SELECT pg_catalog.setval('public.inventaris_id_seq', 1, false);
 
 
 --
--- TOC entry 5035 (class 0 OID 0)
+-- TOC entry 5037 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: transaksi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -222,7 +224,7 @@ SELECT pg_catalog.setval('public.transaksi_id_seq', 1, false);
 
 
 --
--- TOC entry 4870 (class 2606 OID 16854)
+-- TOC entry 4871 (class 2606 OID 16854)
 -- Name: inventaris inventaris_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -231,7 +233,7 @@ ALTER TABLE ONLY public.inventaris
 
 
 --
--- TOC entry 4872 (class 2606 OID 16869)
+-- TOC entry 4874 (class 2606 OID 16869)
 -- Name: transaksi transaksi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -240,7 +242,15 @@ ALTER TABLE ONLY public.transaksi
 
 
 --
--- TOC entry 4873 (class 2620 OID 16964)
+-- TOC entry 4872 (class 1259 OID 17013)
+-- Name: unique_nama_barang_case_insensitive; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX unique_nama_barang_case_insensitive ON public.inventaris USING btree (lower((nama_barang)::text));
+
+
+--
+-- TOC entry 4875 (class 2620 OID 16964)
 -- Name: inventaris otomatis_catat_hapus; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -248,7 +258,7 @@ CREATE TRIGGER otomatis_catat_hapus AFTER DELETE ON public.inventaris FOR EACH R
 
 
 --
--- TOC entry 4874 (class 2620 OID 16962)
+-- TOC entry 4876 (class 2620 OID 16962)
 -- Name: inventaris otomatis_catat_masuk; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -256,16 +266,17 @@ CREATE TRIGGER otomatis_catat_masuk AFTER INSERT ON public.inventaris FOR EACH R
 
 
 --
--- TOC entry 4875 (class 2620 OID 16978)
+-- TOC entry 4877 (class 2620 OID 16978)
 -- Name: inventaris otomatis_catat_update; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
 CREATE TRIGGER otomatis_catat_update AFTER UPDATE ON public.inventaris FOR EACH ROW EXECUTE FUNCTION public.catat_transaksi_update();
 
 
--- Completed on 2026-07-21 09:02:05
+-- Completed on 2026-07-28 08:57:54
 
 --
 -- PostgreSQL database dump complete
 --
+
 
