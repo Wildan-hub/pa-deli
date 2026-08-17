@@ -6,7 +6,7 @@
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
 
--- Started on 2026-07-28 08:57:53
+-- Started on 2026-08-17 19:25:06
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,7 +21,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 224 (class 1255 OID 16963)
+-- TOC entry 224 (class 1255 OID 17187)
 -- Name: catat_transaksi_dihapus(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -39,7 +39,7 @@ $$;
 ALTER FUNCTION public.catat_transaksi_dihapus() OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1255 OID 16961)
+-- TOC entry 223 (class 1255 OID 17185)
 -- Name: catat_transaksi_masuk(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -57,7 +57,7 @@ $$;
 ALTER FUNCTION public.catat_transaksi_masuk() OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1255 OID 16977)
+-- TOC entry 225 (class 1255 OID 17189)
 -- Name: catat_transaksi_update(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -86,7 +86,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 220 (class 1259 OID 16846)
+-- TOC entry 220 (class 1259 OID 17161)
 -- Name: inventaris; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -103,7 +103,7 @@ CREATE TABLE public.inventaris (
 ALTER TABLE public.inventaris OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 16845)
+-- TOC entry 219 (class 1259 OID 17160)
 -- Name: inventaris_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -128,7 +128,7 @@ ALTER SEQUENCE public.inventaris_id_seq OWNED BY public.inventaris.id;
 
 
 --
--- TOC entry 222 (class 1259 OID 16860)
+-- TOC entry 222 (class 1259 OID 17171)
 -- Name: transaksi; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -145,7 +145,7 @@ CREATE TABLE public.transaksi (
 ALTER TABLE public.transaksi OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 16859)
+-- TOC entry 221 (class 1259 OID 17170)
 -- Name: transaksi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -170,7 +170,7 @@ ALTER SEQUENCE public.transaksi_id_seq OWNED BY public.transaksi.id;
 
 
 --
--- TOC entry 4864 (class 2604 OID 16849)
+-- TOC entry 4864 (class 2604 OID 17164)
 -- Name: inventaris id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -178,7 +178,7 @@ ALTER TABLE ONLY public.inventaris ALTER COLUMN id SET DEFAULT nextval('public.i
 
 
 --
--- TOC entry 4866 (class 2604 OID 16863)
+-- TOC entry 4866 (class 2604 OID 17174)
 -- Name: transaksi id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -186,7 +186,7 @@ ALTER TABLE ONLY public.transaksi ALTER COLUMN id SET DEFAULT nextval('public.tr
 
 
 --
--- TOC entry 5026 (class 0 OID 16846)
+-- TOC entry 5026 (class 0 OID 17161)
 -- Dependencies: 220
 -- Data for Name: inventaris; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -196,7 +196,7 @@ COPY public.inventaris (id, nama_barang, stok, harga, kategori) FROM stdin;
 
 
 --
--- TOC entry 5028 (class 0 OID 16860)
+-- TOC entry 5028 (class 0 OID 17171)
 -- Dependencies: 222
 -- Data for Name: transaksi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -224,7 +224,7 @@ SELECT pg_catalog.setval('public.transaksi_id_seq', 1, false);
 
 
 --
--- TOC entry 4871 (class 2606 OID 16854)
+-- TOC entry 4871 (class 2606 OID 17169)
 -- Name: inventaris inventaris_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -233,7 +233,7 @@ ALTER TABLE ONLY public.inventaris
 
 
 --
--- TOC entry 4874 (class 2606 OID 16869)
+-- TOC entry 4874 (class 2606 OID 17180)
 -- Name: transaksi transaksi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -242,7 +242,7 @@ ALTER TABLE ONLY public.transaksi
 
 
 --
--- TOC entry 4872 (class 1259 OID 17013)
+-- TOC entry 4872 (class 1259 OID 17183)
 -- Name: unique_nama_barang_case_insensitive; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -250,7 +250,7 @@ CREATE UNIQUE INDEX unique_nama_barang_case_insensitive ON public.inventaris USI
 
 
 --
--- TOC entry 4875 (class 2620 OID 16964)
+-- TOC entry 4875 (class 2620 OID 17188)
 -- Name: inventaris otomatis_catat_hapus; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -258,7 +258,7 @@ CREATE TRIGGER otomatis_catat_hapus AFTER DELETE ON public.inventaris FOR EACH R
 
 
 --
--- TOC entry 4876 (class 2620 OID 16962)
+-- TOC entry 4876 (class 2620 OID 17186)
 -- Name: inventaris otomatis_catat_masuk; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -266,14 +266,14 @@ CREATE TRIGGER otomatis_catat_masuk AFTER INSERT ON public.inventaris FOR EACH R
 
 
 --
--- TOC entry 4877 (class 2620 OID 16978)
+-- TOC entry 4877 (class 2620 OID 17190)
 -- Name: inventaris otomatis_catat_update; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
 CREATE TRIGGER otomatis_catat_update AFTER UPDATE ON public.inventaris FOR EACH ROW EXECUTE FUNCTION public.catat_transaksi_update();
 
 
--- Completed on 2026-07-28 08:57:54
+-- Completed on 2026-08-17 19:25:07
 
 --
 -- PostgreSQL database dump complete
